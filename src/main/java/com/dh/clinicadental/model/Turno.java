@@ -1,21 +1,25 @@
-package com.example.clinicaDemo.model;
+package com.dh.clinicadental.model;
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "turnos")
 public class Turno {
-    private Integer id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "pacientes_id")
     private Paciente paciente;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "odontologos_id")
     private Odontologo odontologo;
     private Date date; /*2021-09-10*/
 
     public Turno() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Paciente getPaciente() {
@@ -50,5 +54,13 @@ public class Turno {
                 ", odontologo=" + odontologo +
                 ", date=" + date +
                 '}';
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
