@@ -1,15 +1,13 @@
 package com.dh.clinicadental.model;
 
-import com.dh.clinicadental.model.dto.DomicilioDto;
-
 import javax.persistence.*;
 
-@Table(name = "domicilios")
+@Table(name = "Domicilios")
 @Entity
 public class Domicilio {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
     private String calle;
     private String numero;
@@ -26,11 +24,20 @@ public class Domicilio {
         this.localidad = localidad;
         this.provincia = provincia;
     }
-    public Domicilio( String calle, String numero, String localidad, String provincia) {
+
+    public Domicilio(String calle, String numero, String localidad, String provincia) {
         this.calle = calle;
         this.numero = numero;
         this.localidad = localidad;
         this.provincia = provincia;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCalle() {
@@ -76,22 +83,4 @@ public class Domicilio {
                 '}';
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-
-    public static Domicilio from(DomicilioDto domicilioDto){
-        Domicilio domicilio = new Domicilio();
-        domicilio.setId(domicilioDto.getId());
-        domicilio.setCalle(domicilioDto.getCalle());
-        domicilio.setNumero(domicilioDto.getNumero());
-        domicilio.setLocalidad(domicilioDto.getLocalidad());
-        domicilio.setProvincia(domicilioDto.getProvincia());
-        return domicilio;
-    }
 }

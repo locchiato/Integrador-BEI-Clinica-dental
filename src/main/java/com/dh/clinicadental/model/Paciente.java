@@ -1,28 +1,34 @@
 package com.dh.clinicadental.model;
 
-import com.dh.clinicadental.model.dto.PacienteDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "pacientes")
+@Table(name = "Pacientes")
 public class Paciente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
     private String nombre;
     private String apellido;
     private String dni;
     private Date fechaIngreso;
 
-    @ManyToOne
-    @JoinColumn(name="domicilios_id")
+    @OneToOne
+    @JoinColumn(name="domicilio_id")
     private Domicilio domicilio;
 
+    @OneToMany(mappedBy = "paciente")
+    @JsonIgnore //sino entra en un ciclo infinito
+    private Set<Turno> turnos;
+
     public Paciente() {
+        this.turnos = new HashSet<>();
     }
 
     public Paciente(Long id, String nombre, String apellido, String dni, Date fechaIngreso, Domicilio domicilio) {
@@ -32,15 +38,16 @@ public class Paciente {
         this.dni = dni;
         this.fechaIngreso = fechaIngreso;
         this.domicilio = domicilio;
+        this.turnos = new HashSet<>();
     }
 
     public Paciente(String nombre, String apellido, String dni, Date fechaIngreso, Domicilio domicilio) {
-
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.fechaIngreso = fechaIngreso;
         this.domicilio = domicilio;
+        this.turnos = new HashSet<>();
     }
 
 
@@ -93,6 +100,14 @@ public class Paciente {
         this.domicilio = domicilio;
     }
 
+    public Set<Turno> getTurnos() {
+        return turnos;
+    }
+
+    public void setTurnos(Set<Turno> turnos) {
+        this.turnos = turnos;
+    }
+
     @Override
     public String toString() {
         return "Paciente{" +
@@ -103,21 +118,6 @@ public class Paciente {
                 ", fechaIngreso=" + fechaIngreso +
                 ", domicilio=" + domicilio +
                 '}';
-    }
-
-
-    public static Paciente from(PacienteDto pacienteDto){
-        Paciente paciente = new Paciente();
-        paciente.setId(pacienteDto.getId());
-        paciente.setNombre(pacienteDto.getNombre());
-        paciente.setApellido(pacienteDto.getApellido());
-        paciente.setDni(pacienteDto.getDni());
-        paciente.setFechaIngreso(pacienteDto.getFechaIngreso());
-
-        if(Objects.nonNull(pacienteDto.getDomicilio())){
-            paciente.setDomicilio(Domicilio.from(pacienteDto.getDomicilio()));
-        }
-        return paciente;
     }
 
 }

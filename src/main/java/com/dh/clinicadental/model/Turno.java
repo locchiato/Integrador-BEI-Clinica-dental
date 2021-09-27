@@ -3,23 +3,36 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "turnos")
+@Table(name = "Turnos")
 public class Turno {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "pacientes_id")
+    @ManyToOne
+    @JoinColumn(name = "paciente_id", nullable = false)
     private Paciente paciente;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "odontologos_id")
+    @ManyToOne
+    @JoinColumn(name = "odontologo_id", nullable = false)
     private Odontologo odontologo;
-    private Date date; /*2021-09-10*/
+    private Date date; /*formato en JSON: 2021-09-10*/
 
     public Turno() {
+    }
+
+    public Turno(Long id, Paciente paciente, Odontologo odontologo, Date date) {
+        this.id = id;
+        this.paciente = paciente;
+        this.odontologo = odontologo;
+        this.date = date;
+    }
+
+    public Turno(Paciente paciente, Odontologo odontologo, Date date) {
+        this.paciente = paciente;
+        this.odontologo = odontologo;
+        this.date = date;
     }
 
     public Paciente getPaciente() {

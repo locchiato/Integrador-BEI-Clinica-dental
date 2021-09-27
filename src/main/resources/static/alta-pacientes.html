@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es"  xmlns:th="https://thymeleaf.org">
+<head>
+    <title>CRUD pacientes</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/post_paciente.js"></script>
+</head>
+<body>
+<div class="container">
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link" href="/pacientes.html">Administracion pacientes</a>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col-sm-7" style="background-color:#e6fffa; padding:10px; border-radius:3px">
+            <h3>Agregar paciente</h3>
+            <form id="add_new_paciente">
+                <div class="form-group">
+                    <label class="control-label" for="nombre">Nombre:</label>
+                    <input type="text" class="form-control" id="nombre"
+                           placeholder="Ingrese el nombre" name="nombre" required></input>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="apellido">Apellido:</label>
+                    <input type="text" class="form-control" id="apellido"
+                           placeholder="Ingrese la apellido" name="apellido" required></input>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="dni">DNI:</label>
+                    <input type="number" class="form-control" id="dni"
+                           placeholder="Ingrese dni" name="dni"></input>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="calle">Calle:</label>
+                    <input type="text" class="form-control" id="calle"
+                           placeholder="Ingrese la calle" name="calle"></input>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="numero">Numero:</label>
+                    <input type="number" class="form-control" id="numero"
+                           placeholder="Ingrese el numero" name="numero"></input>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="localidad">Localidad:</label>
+                    <input type="text" class="form-control" id="localidad"
+                           placeholder="Ingrese la localidad" name="localidad"></input>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="provincia">Provincia:</label>
+                    <input type="text" class="form-control" id="provincia"
+                           placeholder="Ingrese la provincia" name="provincia"></input>
+                </div>
+
+
+                <button type="submit" class="btn btn-danger" id="btn-add-new-odontologo">Cargar</button>
+            </form>
+            <div id="response" style="display:none; margin-top:10px">
+            </div>
+        </div>
+    </div>
+</div>

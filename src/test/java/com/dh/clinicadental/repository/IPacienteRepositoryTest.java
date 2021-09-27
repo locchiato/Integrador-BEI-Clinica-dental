@@ -32,7 +32,7 @@ public class IPacienteRepositoryTest {
 
         final Paciente saved = repository.save(expected);
 
-        final Paciente actual = entityManager.find(Paciente.class, saved.getApellido());
+        final Paciente actual = entityManager.find(Paciente.class, saved.getId());
 
         assertThat(actual).isEqualTo(expected);
     }

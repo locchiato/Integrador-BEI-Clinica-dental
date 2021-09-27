@@ -4,15 +4,13 @@ import com.dh.clinicadental.dao.IDomicilioRepository;
 import com.dh.clinicadental.dao.IPacienteRepository;
 import com.dh.clinicadental.model.Domicilio;
 import com.dh.clinicadental.model.Paciente;
-import com.dh.clinicadental.model.dto.DomicilioDto;
-import com.dh.clinicadental.model.dto.PacienteDto;
+import com.dh.clinicadental.model.dto.DomicilioDTO;
+import com.dh.clinicadental.model.dto.PacienteDTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 public class PacienteService {
@@ -23,51 +21,75 @@ public class PacienteService {
     @Autowired
     private IDomicilioRepository domicilioRepository;
 
-    // guarda uno
-    public PacienteDto guardar(Paciente p) {
-        p.setFechaIngreso(new Date());
+    @Autowired
+    ObjectMapper mapper;
 
-        actualizarDomicilio(p);
-
-        return savePaciente(p);
+    public void createPaciente(PacienteDTO paciente) {
+        savePaciente(paciente);
     }
 
-    private void actualizarDomicilio(Paciente paciente) {
-        Domicilio domicilioBuscado = paciente.getDomicilio();
-        Optional<Domicilio> domicilio = domicilioRepository.buscarDomicilio(domicilioBuscado.getNumero()).stream()
-                .filter(domicilioActual -> domicilioBuscado.getCalle().equals(domicilioActual.getCalle())).findFirst();
-
-        if (domicilio.isPresent()) {
-            paciente.setDomicilio(domicilio.get());
-        } else {
-            Domicilio dom = domicilioRepository.save(domicilioBuscado);
-            paciente.setDomicilio(dom);
+    public PacienteDTO readPaciente(Long id) {
+        PacienteDTO pacienteDTO = null;
+        Optional<Paciente> paciente = pacienteRepository.findById(id);
+        if (paciente.isPresent()) {
+            pacienteDTO = transformToDTO(paciente.get());
         }
+        return pacienteDTO;
     }
 
-    // trae uno por id
-    public Optional<PacienteDto> buscar(Long id) {
-        return Optional.of(PacienteDto.from(pacienteRepository.getById(id)));
+    public void updatePaciente(PacienteDTO paciente) {
+        savePaciente(paciente);
     }
 
-    // trae todos
-    public List<PacienteDto> buscarTodos() {
-        return pacienteRepository.findAll().stream().map(PacienteDto::from).collect(Collectors.toList());
+    public void deletePaciente(Long id) {
+        pacienteRepository.deleteById(id);
     }
 
-    // borra uno por id
-    public void eliminar(Long id) {
-        pacienteRepository.delete(pacienteRepository.getById(id));
+    public Collection<PacienteDTO> getAll() {
+        List<Paciente> pacientes = pacienteRepository.findAll();
+        return transformAllToDTO(pacientes);
     }
 
-    // edita uno
-    public PacienteDto actualizar(Paciente p) {
-        return savePaciente(p);
+    private Domicilio obtenerDomicilio(DomicilioDTO domicilioDTO) {
+        List<Domicilio> domicilios = domicilioRepository.findAll();
+
+        for (Domicilio domicilio : domicilios) {
+            if(domicilioDTO.getCalle().equals(domicilio.getCalle()) &&
+                    domicilioDTO.getNumero().equals(domicilio.getNumero()) &&
+                    domicilioDTO.getLocalidad().equals(domicilio.getLocalidad()) &&
+                    domicilioDTO.getProvincia().equals(domicilio.getProvincia()))
+                return domicilio;
+        }
+        return domicilioRepository.save(mapper.convertValue(domicilioDTO, Domicilio.class));
     }
 
-    private PacienteDto savePaciente(Paciente p) {
-        return PacienteDto.from(
-                pacienteRepository.save(p)
-        );
+    private void savePaciente(PacienteDTO p) {
+        Paciente paciente = transformToEntity(p);
+        Domicilio domicilio = obtenerDomicilio(p.getDomicilio());
+        paciente.setDomicilio(domicilio);
+        pacienteRepository.save(paciente);
     }
+
+    private Set<PacienteDTO> transformAllToDTO(Collection<Paciente> pacientes) {
+        Set<PacienteDTO> pacientesDTO = new HashSet<>();
+        for (Paciente paciente : pacientes) {
+            PacienteDTO pacienteDTO = transformToDTO(paciente);
+            pacientesDTO.add(pacienteDTO);
+        }
+        return pacientesDTO;
+    }
+
+    private Paciente transformToEntity(PacienteDTO p) {
+        return mapper.convertValue(p, Paciente.class);
+    }
+
+    private PacienteDTO transformToDTO(Paciente p) {
+        return mapper.convertValue(p, PacienteDTO.class);
+    }
+
+    public Set<PacienteDTO> getPacienteWithApellidoLike(String apellido) {
+        Set<Paciente> pacientes = pacienteRepository.getPacienteByApellidoLike(apellido);
+        return transformAllToDTO(pacientes);
+    }
+
 }
