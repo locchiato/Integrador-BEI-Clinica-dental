@@ -1,5 +1,5 @@
 window.addEventListener('load', function () {
-    const formulario = document.querySelector('#add_new_paciente');
+    const formulario = document.querySelector('#add_new_turno');
     formulario.addEventListener('submit', function (event) {
         event.preventDefault();
         console.log("Sending post")
@@ -14,7 +14,7 @@ window.addEventListener('load', function () {
                 provincia: document.querySelector('#provincia').value,
             }
         }
-        const url = '/pacientes';
+        const url = '/turnos';
 
         const settings = {
             method: 'POST',
@@ -28,7 +28,7 @@ window.addEventListener('load', function () {
                 '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                 '<strong></strong> Paciente agregado </div>'
 
-            showMessage(successAlert);
+            agregarMensaje(successAlert);
             resetUploadForm();
 
         }).catch(error =>{
@@ -36,13 +36,13 @@ window.addEventListener('load', function () {
                 '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                 '<strong> Error intente nuevamente</strong> </div>'
 
-            showMessage(errorAlert);
+            agregarMensaje(errorAlert);
             resetUploadForm();
         })
 
     });
 
-    function showMessage(mensaje) {
+    function agregarMensaje(mensaje) {
         document.querySelector("#response").innerHTML = mensaje;
         document.querySelector("#response").style.display = "block";
     }
@@ -61,9 +61,9 @@ window.addEventListener('load', function () {
     (function(){
         let pathname = window.location.pathname;
         if(pathname === "/"){
-            document.querySelector(".nav .nav-item a:first").classList.add("active");
-        } else if (pathname == "/pacientes.html") {
-            document.querySelector(".nav .nav-item a:last").classList.add("active");
+            $(".nav .nav-item a:first").addClass("active");
+        } else if (pathname == "/turnos.html") {
+            $(".nav .nav-item a:last").addClass("active");
         }
     })();
 });

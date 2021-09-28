@@ -9,6 +9,8 @@ import com.dh.clinicadental.model.Odontologo;
 import com.dh.clinicadental.model.Paciente;
 import com.dh.clinicadental.model.Turno;
 import com.dh.clinicadental.model.dto.DomicilioDTO;
+import com.dh.clinicadental.model.dto.OdontologoDTO;
+import com.dh.clinicadental.model.dto.PacienteDTO;
 import com.dh.clinicadental.model.dto.TurnoDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,15 +42,24 @@ public class TurnoService {
     }
 
     private Turno manejarDTO(TurnoDTO turnoDTO) {
-        Paciente paciente = mapper.convertValue(turnoDTO.getPaciente(), Paciente.class);
         Domicilio domicilio = obtenerDomicilio(turnoDTO.getPaciente().getDomicilio());
+        Paciente paciente = mapper.convertValue(turnoDTO.getPaciente(), Paciente.class);
+
         paciente.setDomicilio(domicilio);
         pacienteRepository.save(paciente);
 
         Odontologo odontologo = mapper.convertValue(turnoDTO.getOdontologo(), Odontologo.class);
         odontologoRepository.save(odontologo);
-        
-        return new Turno(paciente, odontologo, new Date());
+
+        System.out.println(paciente);
+        System.out.println(odontologo);
+
+        if(turnoDTO.getId() != null){
+            turnoDTO.setPaciente(mapper.convertValue(paciente, PacienteDTO.class));
+            turnoDTO.setOdontologo(mapper.convertValue(odontologo, OdontologoDTO.class));
+            return mapper.convertValue(turnoDTO, Turno.class);
+        }
+        return new Turno(paciente, odontologo, turnoDTO.getDate());
     }
 
     private Domicilio obtenerDomicilio(DomicilioDTO domicilioDTO) {

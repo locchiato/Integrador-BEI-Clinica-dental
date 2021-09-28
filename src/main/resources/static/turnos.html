@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <title>CRUD pacientes</title>
+  <title>CRUD turnos</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/js/get_paciente.js"></script>
-  <script type="text/javascript" src="/js/put_paciente.js"></script>
-  <script type="text/javascript" src="/js/delete_paciente.js"></script>
+  <script type="text/javascript" src="/js/get_turno.js"></script>
+  <script type="text/javascript" src="/js/put_turno.js"></script>
+  <script type="text/javascript" src="/js/delete_turno.js"></script>
 </head>
 <body>
 <div class="container">
   <ul class="nav nav-pills">
     <li class="nav-item">
-      <a class="nav-link" href="/alta-pacientes.html">Agregar nuevo</a>
+      <a class="nav-link" href="/alta-turnos.html">Agregar nuevo</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/pacientes.html">Todos</a>
+      <a class="nav-link" href="/turnos.html">Todos</a>
     </li>
   </ul>
-  <div id="div_paciente_table">
+  <div id="div_turno_table">
     <h2>Pacientes</h2>
     <div class="row col-md-6 table-responsive">
-      <table id="pacienteTable" class="table table-striped">
+      <table id="turnoTable" class="table table-striped">
         <thead>
         <tr>
           <th>Id</th>
@@ -47,8 +47,8 @@
   <div class="row">
     <div class="col-sm-6" style="display: none;
 											background-color:#e6fffa; padding:10px; border-radius:3px"
-         id="div_paciente_updating">
-      <form id="update_paciente_form">
+         id="div_turno_updating">
+      <form id="update_turno_form">
         <div class="form-group">
           <label for="id">Id:</label>
           <input type="text" class="form-control" id="id" readonly>

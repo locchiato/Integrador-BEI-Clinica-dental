@@ -67,6 +67,7 @@ public class PacienteService {
         Paciente paciente = transformToEntity(p);
         Domicilio domicilio = obtenerDomicilio(p.getDomicilio());
         paciente.setDomicilio(domicilio);
+        paciente.setFechaIngreso(new Date());
         pacienteRepository.save(paciente);
     }
 

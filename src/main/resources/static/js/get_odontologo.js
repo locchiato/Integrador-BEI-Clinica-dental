@@ -22,14 +22,14 @@ window.addEventListener('load', function () {
                         '</button>';
 
                     let tr_id = 'tr_' + odontologo.id;
-                    let studentRow = '<tr id=\"' + tr_id + "\"" + '>' +
+                    let odontologoRow = '<tr id=\"' + tr_id + "\"" + '>' +
                         '<td>' + get_More_Info_Btn + '</td>' +
                         '<td class=\"td_first_name\">' + odontologo.nombre.toUpperCase() + '</td>' +
                         '<td class=\"td_last_name\">' + odontologo.apellido.toUpperCase() + '</td>' +
                         '<td class=\"td_matricula\">' + odontologo.matricula + '</td>' +
                         '<td>' + deleteButton + '</td>' +
                         '</tr>';
-                    $('#odontologoTable tbody').append(studentRow);
+                    document.querySelector('#odontologoTable tbody').innerHTML += odontologoRow;
                 }
             }).catch(error =>{
             alert("ERROR: ", error);
@@ -41,7 +41,7 @@ window.addEventListener('load', function () {
     (function(){
         let pathname = window.location.pathname;
         if (pathname == "/odontologos.html") {
-            $(".nav .nav-item a:last").addClass("active");
+            document.querySelector(".nav .nav-item a:last").classList.add("active");
         }
     })();
 });

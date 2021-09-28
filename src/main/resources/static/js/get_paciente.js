@@ -33,7 +33,8 @@ window.addEventListener('load', function () {
                         '<td class=\"td_dom_province\">' + paciente.domicilio.provincia + '</td>' +
                         '<td>' + deleteButton + '</td>' +
                         '</tr>';
-                    $('#pacienteTable tbody').append(pacienteRow);
+                    document.querySelector('#pacienteTable tbody').innerHTML += pacienteRow;
+
                 }
 
             }).catch(error =>{
