@@ -1,0 +1,60 @@
+package com.dh.clinicadental.controller;
+
+import com.dh.clinicadental.model.dto.DomicilioDTO;
+import com.dh.clinicadental.model.dto.PacienteDTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+import static com.dh.clinicadental.util.Builder.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class PacienteIntegrationTest {
+
+    @Autowired
+    private WebApplicationContext wac;
+
+    private MockMvc mockMvc;
+
+    @Before
+    public void setUp() {
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    }
+
+    @Test
+    public void createPacienteAPI() throws Exception
+    {
+
+        ObjectWriter writer = new ObjectMapper()
+                .configure(SerializationFeature.WRAP_ROOT_VALUE, false)
+                .writer();
+
+
+        DomicilioDTO domicilio = armarDomicilio("Union Street", 2298, "Baaarran", "Santa Fe");
+        PacienteDTO paciente = armarPaciente("Rogelio", "Diaaaz", 34471213, domicilio);
+
+        String payloadJson = writer.writeValueAsString(paciente);
+
+        mockMvc.perform( MockMvcRequestBuilders
+                        .get("/pacientes")
+                        .content(payloadJson)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+}

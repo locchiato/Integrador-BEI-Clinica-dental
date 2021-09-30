@@ -29,7 +29,7 @@ public class TurnoController {
         return turnoService.readTurno(id);
     }
 
-    @PutMapping()
+    @PutMapping
     public ResponseEntity<?> updateStudent(@RequestBody TurnoDTO turnoDTO)
     {
         turnoService.updateTurno(turnoDTO);
@@ -44,7 +44,7 @@ public class TurnoController {
 
     }
 
-    @GetMapping("/list")
+    @GetMapping
     public Collection<TurnoDTO> listStudents()
     {
         return turnoService.getAll();

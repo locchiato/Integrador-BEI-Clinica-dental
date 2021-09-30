@@ -1,8 +1,24 @@
 window.addEventListener('load', function () {
+
+    cargarPacientes();
+    cargarOdontologos();
+
+
+
     const formulario = document.querySelector('#add_new_turno');
     formulario.addEventListener('submit', function (event) {
         event.preventDefault();
         console.log("Sending post")
+
+
+        // ID seleccionada odontologo
+        let odontologo_id = 1;
+
+        // ID seleccionada paciente
+        let paciente_id = 1;
+
+
+
         let formData = {
             nombre: document.querySelector('#nombre').value,
             apellido: document.querySelector('#apellido').value,

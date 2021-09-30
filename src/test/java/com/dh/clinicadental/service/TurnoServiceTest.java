@@ -1,7 +1,5 @@
 package com.dh.clinicadental.service;
 
-import com.dh.clinicadental.model.Paciente;
-import com.dh.clinicadental.model.Turno;
 import com.dh.clinicadental.model.dto.DomicilioDTO;
 import com.dh.clinicadental.model.dto.OdontologoDTO;
 import com.dh.clinicadental.model.dto.PacienteDTO;
@@ -18,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+import static com.dh.clinicadental.util.Util.stringToDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -43,7 +42,6 @@ class TurnoServiceTest {
         turnoGuardado = turnoService.getAll().stream().collect(Collectors.toList()).get(0);
     }
 
-    //hecho
     @Test
     void createTurno() {
         DomicilioDTO domicilio = armarDomicilio("Union Street", 2298, "Baaarran", "Santa Fe");
@@ -65,15 +63,15 @@ class TurnoServiceTest {
     void updateTurno() {
         TurnoDTO turnoEncontrado = turnoService.readTurno(turnoGuardado.getId());
 
-        assertEquals(turnoGuardado.getDate().getTime(), turnoEncontrado.getDate().getTime());
+        assertEquals(turnoGuardado.getFecha().getTime(), turnoEncontrado.getFecha().getTime());
 
         Date hoy = new Date();
-        turnoEncontrado.setDate(hoy);
+        turnoEncontrado.setFecha(hoy);
         turnoService.updateTurno(turnoEncontrado);
 
 
-        assertNotEquals(turnoGuardado.getDate().getTime(),
-                turnoService.readTurno(turnoGuardado.getId()).getDate().getTime());
+        assertNotEquals(turnoGuardado.getFecha().getTime(),
+                turnoService.readTurno(turnoGuardado.getId()).getFecha().getTime());
 
     }
 
@@ -123,19 +121,8 @@ class TurnoServiceTest {
         TurnoDTO t = new TurnoDTO();
         t.setPaciente(paciente);
         t.setOdontologo(odontologo);
-        t.setDate(getDate(date));
+        t.setFecha(stringToDate(date));
         return t;
-    }
-
-    private Date getDate(String date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateNuevo = null;
-        try {
-            dateNuevo = formatter.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return dateNuevo;
     }
 
 }

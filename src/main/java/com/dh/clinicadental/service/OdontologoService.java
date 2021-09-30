@@ -18,22 +18,18 @@ public class OdontologoService {
     @Autowired
     ObjectMapper mapper;
 
-    public void createOdontologo(OdontologoDTO odontologo) {
-        saveOdontologo(odontologo);
+    public OdontologoDTO createOdontologo(OdontologoDTO odontologo) {
+        return saveOdontologo(odontologo);
     }
 
-    private void saveOdontologo(OdontologoDTO odontologoDTO) {
+    private OdontologoDTO saveOdontologo(OdontologoDTO odontologoDTO) {
         Odontologo odontologo = mapper.convertValue(odontologoDTO, Odontologo.class);
-        odontologoRepository.save(odontologo);
+        return mapper.convertValue(odontologoRepository.save(odontologo), OdontologoDTO.class);
     }
 
     public OdontologoDTO readOdontologo(Long id) {
-        OdontologoDTO odontologoDTO = null;
-        Optional<Odontologo> odontologo = odontologoRepository.findById(id);
-        if (odontologo.isPresent()) {
-            odontologoDTO = mapper.convertValue(odontologo, OdontologoDTO.class);
-        }
-        return odontologoDTO;
+        Odontologo o = odontologoRepository.findById(id).orElse(null);
+        return mapper.convertValue(o, OdontologoDTO.class);
     }
 
     public void updateOdontologo(OdontologoDTO odontologo) {

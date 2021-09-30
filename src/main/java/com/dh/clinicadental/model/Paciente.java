@@ -12,7 +12,8 @@ import java.util.Set;
 public class Paciente {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PACIENTES_SEQ")
+    @SequenceGenerator(name = "PACIENTES_SEQ", sequenceName = "SEQUENCE_PACIENTES")
     private Long id;
     private String nombre;
     private String apellido;

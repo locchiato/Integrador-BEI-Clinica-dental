@@ -3,6 +3,9 @@ package com.dh.clinicadental.model.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+import java.util.StringJoiner;
+
 @Getter @Setter
 public class PacienteDTO {
     
@@ -10,18 +13,18 @@ public class PacienteDTO {
     private String nombre;
     private String apellido;
     private String dni;
+    private Date fechaIngreso;
     private DomicilioDTO domicilio;
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("PacienteDto{");
-        sb.append("id=").append(id);
-        sb.append(", nombre='").append(nombre).append('\'');
-        sb.append(", apellido='").append(apellido).append('\'');
-        sb.append(", dni='").append(dni).append('\'');
-        sb.append(", domicilio=").append(domicilio);
-        sb.append('}');
-        return sb.toString();
+        return new StringJoiner(", ", PacienteDTO.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("nombre='" + nombre + "'")
+                .add("apellido='" + apellido + "'")
+                .add("dni='" + dni + "'")
+                .add("fechaIngreso=" + fechaIngreso)
+                .add("domicilio=" + domicilio)
+                .toString();
     }
-
 }

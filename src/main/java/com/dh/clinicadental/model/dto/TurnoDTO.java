@@ -13,7 +13,7 @@ public class TurnoDTO {
     private Long id;
     private PacienteDTO paciente;
     private OdontologoDTO odontologo;
-    private Date date;
+    private Date fecha;
 
     @Override
     public String toString() {
@@ -21,7 +21,7 @@ public class TurnoDTO {
                 .add("id=" + id)
                 .add("paciente=" + paciente)
                 .add("odontologo=" + odontologo)
-                .add("date=" + date)
+                .add("fecha=" + fecha)
                 .toString();
     }
 }

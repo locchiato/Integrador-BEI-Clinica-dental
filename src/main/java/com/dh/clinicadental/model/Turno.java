@@ -7,7 +7,8 @@ import java.util.Date;
 public class Turno {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TURNOS_SEQ")
+    @SequenceGenerator(name = "TURNOS_SEQ", sequenceName = "SEQUENCE_TURNOS")
     private Long id;
 
     @ManyToOne
@@ -17,22 +18,22 @@ public class Turno {
     @ManyToOne
     @JoinColumn(name = "odontologo_id", nullable = false)
     private Odontologo odontologo;
-    private Date date; /*formato en JSON: 2021-09-10*/
+    private Date fecha;
 
     public Turno() {
     }
 
-    public Turno(Long id, Paciente paciente, Odontologo odontologo, Date date) {
+    public Turno(Long id, Paciente paciente, Odontologo odontologo, Date fecha) {
         this.id = id;
         this.paciente = paciente;
         this.odontologo = odontologo;
-        this.date = date;
+        this.fecha = fecha;
     }
 
-    public Turno(Paciente paciente, Odontologo odontologo, Date date) {
+    public Turno(Paciente paciente, Odontologo odontologo, Date fecha) {
         this.paciente = paciente;
         this.odontologo = odontologo;
-        this.date = date;
+        this.fecha = fecha;
     }
 
     public Paciente getPaciente() {
@@ -51,12 +52,12 @@ public class Turno {
         this.odontologo = odontologo;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setFecha(Date date) {
+        this.fecha = date;
     }
 
     @Override
@@ -65,7 +66,7 @@ public class Turno {
                 "id=" + id +
                 ", paciente=" + paciente +
                 ", odontologo=" + odontologo +
-                ", date=" + date +
+                ", fecha=" + fecha +
                 '}';
     }
 

@@ -1,8 +1,6 @@
 package com.dh.clinicadental.service;
 
-import com.dh.clinicadental.dao.IDomicilioRepository;
 import com.dh.clinicadental.dao.IPacienteRepository;
-import com.dh.clinicadental.model.Domicilio;
 import com.dh.clinicadental.model.Paciente;
 import com.dh.clinicadental.model.dto.DomicilioDTO;
 import com.dh.clinicadental.model.dto.PacienteDTO;
@@ -16,25 +14,32 @@ import java.util.*;
 public class PacienteService {
 
     @Autowired
-    private IPacienteRepository pacienteRepository;
+    IPacienteRepository pacienteRepository;
 
     @Autowired
-    private IDomicilioRepository domicilioRepository;
+    DomicilioService domicilioService;
 
     @Autowired
     ObjectMapper mapper;
 
-    public void createPaciente(PacienteDTO paciente) {
-        savePaciente(paciente);
+    public PacienteDTO createPaciente(PacienteDTO paciente) {
+        return savePaciente(paciente);
     }
 
+    private PacienteDTO savePaciente(PacienteDTO paciente) {
+        obtenerDomicilio(paciente);
+        return transformToDTO(pacienteRepository.save(transformToEntity(paciente)));
+    }
+
+    private void obtenerDomicilio(PacienteDTO pacienteDTO) {
+        DomicilioDTO domicilio = pacienteDTO.getDomicilio();
+        pacienteDTO.setDomicilio(domicilioService.createDomicilio(domicilio));
+    }
+
+
     public PacienteDTO readPaciente(Long id) {
-        PacienteDTO pacienteDTO = null;
-        Optional<Paciente> paciente = pacienteRepository.findById(id);
-        if (paciente.isPresent()) {
-            pacienteDTO = transformToDTO(paciente.get());
-        }
-        return pacienteDTO;
+        Paciente paciente = pacienteRepository.findById(id).orElse(null);
+        return transformToDTO(paciente);
     }
 
     public void updatePaciente(PacienteDTO paciente) {
@@ -50,25 +55,9 @@ public class PacienteService {
         return transformAllToDTO(pacientes);
     }
 
-    private Domicilio obtenerDomicilio(DomicilioDTO domicilioDTO) {
-        List<Domicilio> domicilios = domicilioRepository.findAll();
-
-        for (Domicilio domicilio : domicilios) {
-            if(domicilioDTO.getCalle().equals(domicilio.getCalle()) &&
-                    domicilioDTO.getNumero().equals(domicilio.getNumero()) &&
-                    domicilioDTO.getLocalidad().equals(domicilio.getLocalidad()) &&
-                    domicilioDTO.getProvincia().equals(domicilio.getProvincia()))
-                return domicilio;
-        }
-        return domicilioRepository.save(mapper.convertValue(domicilioDTO, Domicilio.class));
-    }
-
-    private void savePaciente(PacienteDTO p) {
-        Paciente paciente = transformToEntity(p);
-        Domicilio domicilio = obtenerDomicilio(p.getDomicilio());
-        paciente.setDomicilio(domicilio);
-        paciente.setFechaIngreso(new Date());
-        pacienteRepository.save(paciente);
+    public Set<PacienteDTO> getPacienteWithApellidoLike(String apellido) {
+        Set<Paciente> pacientes = pacienteRepository.getPacienteByApellidoLike(apellido);
+        return transformAllToDTO(pacientes);
     }
 
     private Set<PacienteDTO> transformAllToDTO(Collection<Paciente> pacientes) {
@@ -86,11 +75,6 @@ public class PacienteService {
 
     private PacienteDTO transformToDTO(Paciente p) {
         return mapper.convertValue(p, PacienteDTO.class);
-    }
-
-    public Set<PacienteDTO> getPacienteWithApellidoLike(String apellido) {
-        Set<Paciente> pacientes = pacienteRepository.getPacienteByApellidoLike(apellido);
-        return transformAllToDTO(pacientes);
     }
 
 }

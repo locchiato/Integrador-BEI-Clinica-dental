@@ -1,10 +1,13 @@
 package com.dh.clinicadental.service;
 
 import com.dh.clinicadental.model.Domicilio;
+import com.dh.clinicadental.model.Paciente;
 import com.dh.clinicadental.model.dto.DomicilioDTO;
 import com.dh.clinicadental.model.dto.PacienteDTO;
+import com.dh.clinicadental.model.dto.TurnoDTO;
 import com.dh.clinicadental.service.PacienteService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,8 @@ public class PacienteServiceTest {
     @Autowired
     ObjectMapper mapper;
 
+    PacienteDTO pacienteGuardado;
+
     @BeforeEach
     public void beforeAll() throws Exception {
 
@@ -40,7 +45,7 @@ public class PacienteServiceTest {
         o.setDni("3455647");
         o.setDomicilio(dom);
 
-        pacienteService.createPaciente(o);
+        pacienteGuardado = pacienteService.createPaciente(o);
 
     }
 
@@ -67,16 +72,17 @@ public class PacienteServiceTest {
     }
 
     @Test
-    public void eliminarPaciente() {
-        Collection<PacienteDTO> pacientes = pacienteService.getAll();
-        PacienteDTO paciente = pacientes.stream().collect(Collectors.toList()).get(0);
-
-        assertTrue(pacienteService.readPaciente(paciente.getId()) != null);
-        pacienteService.deletePaciente(paciente.getId());
-        assertTrue(pacienteService.readPaciente(paciente.getId()) == null);
-
+    void eliminarPaciente() {
+        assertNotNull(pacienteService.readPaciente(pacienteGuardado.getId()));
+        pacienteService.deletePaciente(pacienteGuardado.getId());
+        assertNull(pacienteService.readPaciente(pacienteGuardado.getId()));
     }
 
-
+    @AfterEach
+    void setCleanup() {
+        for (PacienteDTO paciente : pacienteService.getAll()) {
+            pacienteService.deletePaciente(paciente.getId());
+        }
+    }
 
 }
