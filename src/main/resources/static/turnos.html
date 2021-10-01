@@ -8,6 +8,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/get_odontologo.js"></script>
+  <script type="text/javascript" src="/js/get_paciente.js"></script>
   <script type="text/javascript" src="/js/get_turno.js"></script>
   <script type="text/javascript" src="/js/put_turno.js"></script>
   <script type="text/javascript" src="/js/delete_turno.js"></script>
@@ -22,6 +24,47 @@
       <a class="nav-link" href="/turnos.html">Todos</a>
     </li>
   </ul>
+
+  <div id="div_paciente_table">
+    <h2>Pacientes</h2>
+    <div class="row col-md-6 table-responsive">
+      <table id="pacienteTable" class="table table-striped">
+        <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>DNI</th>
+          <th>Calle</th>
+          <th>Numero</th>
+          <th>Localidad</th>
+          <th>Provincia</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="div_odontologo_table">
+    <h2>Odontologos</h2>
+    <div class="row col-md-6 table-responsive">
+      <table id="odontologoTable" class="table table-striped">
+        <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Matricula</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <div id="div_turno_table">
     <h2>Turnos</h2>
     <div class="row col-md-6 table-responsive">

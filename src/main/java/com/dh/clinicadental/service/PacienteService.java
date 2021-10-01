@@ -27,11 +27,11 @@ public class PacienteService {
     }
 
     private PacienteDTO savePaciente(PacienteDTO paciente) {
-        obtenerDomicilio(paciente);
+        guardarDomicilio(paciente);
         return transformToDTO(pacienteRepository.save(transformToEntity(paciente)));
     }
 
-    private void obtenerDomicilio(PacienteDTO pacienteDTO) {
+    private void guardarDomicilio(PacienteDTO pacienteDTO) {
         DomicilioDTO domicilio = pacienteDTO.getDomicilio();
         pacienteDTO.setDomicilio(domicilioService.createDomicilio(domicilio));
     }
