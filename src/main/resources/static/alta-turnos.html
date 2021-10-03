@@ -24,21 +24,23 @@
         <div class="col-sm-7" style="background-color:#e6fffa; padding:10px; border-radius:3px">
             <h3>Agregar turno</h3>
             <form id="add_new_turno">
-                <!-- TODO deberian ser selects -->
                 <div class="form-group">
-                    <label class="control-label" for="nombre">Paciente:</label>
-                    <input type="text" class="form-control" id="nombre"
-                           placeholder="Ingrese el nombre" name="nombre" required></input>
+                    <label class="control-label" for="pacientes">Elija el paciente:</label>
+                    <select class="form-control" id="pacientes">
+
+                    </select>
                 </div>
+
                 <div class="form-group">
-                    <label class="control-label" for="apellido">Odontologo:</label>
-                    <input type="text" class="form-control" id="apellido"
-                           placeholder="Ingrese la apellido" name="apellido" required></input>
+                    <label class="control-label" for="odontologos">Elija el odontologo:</label>
+                    <select class="form-control" id="odontologos">
+
+                    </select>
                 </div>
+
                 <div class="form-group">
-                    <label class="control-label" for="fecha">Fecha:</label>
-                    <input type="number" class="form-control" id="fecha"
-                           placeholder="Ingrese dni" name="fecha"></input>
+                    <label class="control-label" for="fecha">Fecha del turno:</label>
+                    <input type="text" class="form-control" placeholder="fecha" id="fecha">
                 </div>
 
                 <button type="submit" class="btn btn-danger" id="btn-add-new-odontologo">Cargar</button>

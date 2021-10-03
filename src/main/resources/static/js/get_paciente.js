@@ -7,8 +7,6 @@ window.addEventListener('load', function () {
         fetch(url, settings)
             .then(response => response.json())
             .then(data => {
-                let pathname = window.location.pathname;
-                if (pathname == "/pacientes.html") {
                     for (paciente of data) {
 
                         let deleteButton = '<button' +
@@ -38,10 +36,6 @@ window.addEventListener('load', function () {
                         document.querySelector('#pacienteTable tbody').innerHTML += pacienteRow;
 
                     }
-                } else {
-                    // capturar select de alta-turnos
-
-                }
 
             }).catch(error => {
             alert("ERROR: ", error);

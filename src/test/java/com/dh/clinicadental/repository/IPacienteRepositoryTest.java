@@ -26,14 +26,14 @@ public class IPacienteRepositoryTest {
     @Test
     public void save_StoresRecord_WhenRecordIsValid() {
 
-        final Paciente expected = new Paciente();
-        expected.setNombre(randomUUID().toString());
-        expected.setApellido(randomUUID().toString());
+        final Paciente pacienteAGuardar = new Paciente();
+        pacienteAGuardar.setNombre(randomUUID().toString());
+        pacienteAGuardar.setApellido(randomUUID().toString());
 
-        final Paciente saved = repository.save(expected);
+        final Paciente pacienteGuardado = repository.save(pacienteAGuardar);
 
-        final Paciente actual = entityManager.find(Paciente.class, saved.getId());
+        final Paciente actual = entityManager.find(Paciente.class, pacienteGuardado.getId());
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(pacienteAGuardar);
     }
 }

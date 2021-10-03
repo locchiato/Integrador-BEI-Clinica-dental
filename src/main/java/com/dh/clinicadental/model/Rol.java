@@ -3,10 +3,7 @@ package com.dh.clinicadental.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="Roles")
@@ -15,7 +12,8 @@ import javax.persistence.Table;
 public class Rol {
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "odontologo_sequence", sequenceName = "odontologo_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "odontologo_sequence")
     private Long id;
     private String name;
 

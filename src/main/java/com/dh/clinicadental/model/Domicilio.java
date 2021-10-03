@@ -1,14 +1,19 @@
 package com.dh.clinicadental.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
-@Table(name = "Domicilios")
 @Entity
+@Table(name = "Domicilios")
+@Setter
+@Getter
 public class Domicilio {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DOMICILIOS_SEQ")
-    @SequenceGenerator(name = "DOMICILIOS_SEQ", sequenceName = "SEQUENCE_DOMICILIOS")
+    @SequenceGenerator(name = "domicilio_sequence", sequenceName = "domicilio_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "domicilio_sequence")
     private Long id;
     private String calle;
     private String numero;
@@ -16,61 +21,6 @@ public class Domicilio {
     private String provincia;
 
     public Domicilio() {
-    }
-
-    public Domicilio(Long id, String calle, String numero, String localidad, String provincia) {
-        this.id = id;
-        this.calle = calle;
-        this.numero = numero;
-        this.localidad = localidad;
-        this.provincia = provincia;
-    }
-
-    public Domicilio(String calle, String numero, String localidad, String provincia) {
-        this.calle = calle;
-        this.numero = numero;
-        this.localidad = localidad;
-        this.provincia = provincia;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCalle() {
-        return calle;
-    }
-
-    public void setCalle(String calle) {
-        this.calle = calle;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getLocalidad() {
-        return localidad;
-    }
-
-    public void setLocalidad(String localidad) {
-        this.localidad = localidad;
-    }
-
-    public String getProvincia() {
-        return provincia;
-    }
-
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
     }
 
     @Override

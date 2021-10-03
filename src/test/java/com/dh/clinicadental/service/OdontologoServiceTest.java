@@ -38,6 +38,7 @@ public class OdontologoServiceTest {
 
     @Test
     void createOdontologo() throws Exception {
+        assertEquals(1, odontologoService.getAll().size());
         OdontologoDTO odontologo = armarOdontologo("Santiago", "Paaaz", 3455647);
         odontologoService.createOdontologo(odontologo);
 
@@ -77,7 +78,7 @@ public class OdontologoServiceTest {
     }
 
     @AfterEach
-    void setCleanup() {
+    void afterAll() {
         for (OdontologoDTO odontologo : odontologoService.getAll()) {
             odontologoService.deleteOdontologo(odontologo.getId());
         }

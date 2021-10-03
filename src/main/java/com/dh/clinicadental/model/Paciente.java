@@ -1,6 +1,8 @@
 package com.dh.clinicadental.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,11 +11,13 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Pacientes")
+@Setter
+@Getter
 public class Paciente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PACIENTES_SEQ")
-    @SequenceGenerator(name = "PACIENTES_SEQ", sequenceName = "SEQUENCE_PACIENTES")
+    @SequenceGenerator(name = "paciente_sequence", sequenceName = "paciente_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "paciente_sequence")
     private Long id;
     private String nombre;
     private String apellido;
@@ -29,7 +33,6 @@ public class Paciente {
     private Set<Turno> turnos;
 
     public Paciente() {
-        this.turnos = new HashSet<>();
     }
 
     public Paciente(Long id, String nombre, String apellido, String dni, Date fechaIngreso, Domicilio domicilio) {
@@ -39,7 +42,6 @@ public class Paciente {
         this.dni = dni;
         this.fechaIngreso = fechaIngreso;
         this.domicilio = domicilio;
-        this.turnos = new HashSet<>();
     }
 
     public Paciente(String nombre, String apellido, String dni, Date fechaIngreso, Domicilio domicilio) {
@@ -48,65 +50,6 @@ public class Paciente {
         this.dni = dni;
         this.fechaIngreso = fechaIngreso;
         this.domicilio = domicilio;
-        this.turnos = new HashSet<>();
-    }
-
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public Date getFechaIngreso() {
-        return fechaIngreso;
-    }
-
-    public void setFechaIngreso(Date fechaIngreso) {
-        this.fechaIngreso = fechaIngreso;
-    }
-
-    public Domicilio getDomicilio() {
-        return domicilio;
-    }
-
-    public void setDomicilio(Domicilio domicilio) {
-        this.domicilio = domicilio;
-    }
-
-    public Set<Turno> getTurnos() {
-        return turnos;
-    }
-
-    public void setTurnos(Set<Turno> turnos) {
-        this.turnos = turnos;
     }
 
     @Override

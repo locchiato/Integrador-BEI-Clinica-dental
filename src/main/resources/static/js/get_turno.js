@@ -24,13 +24,9 @@ window.addEventListener('load', function () {
                     let tr_id = 'tr_' + turno.id;
                     let turnoRow = '<tr id=\"' + tr_id + "\"" + '>' +
                         '<td>' + get_More_Info_Btn + '</td>' +
-                        '<td class=\"td_first_name\">' + turno.nombre.toUpperCase() + '</td>' +
-                        '<td class=\"td_last_name\">' + turno.apellido.toUpperCase() + '</td>' +
-                        '<td class=\"td_dni\">' + turno.dni + '</td>' +
-                        '<td class=\"td_dom_street\">' + turno.domicilio.calle + '</td>' +
-                        '<td class=\"td_dom_number\">' + turno.domicilio.numero + '</td>' +
-                        '<td class=\"td_dom_locality\">' + turno.domicilio.localidad + '</td>' +
-                        '<td class=\"td_dom_province\">' + turno.domicilio.provincia + '</td>' +
+                        '<td class=\"td_full_name_paciente\">' + turno.paciente.nombre.toUpperCase() + ' ' + turno.paciente.apellido.toUpperCase() + '</td>' +
+                        '<td class=\"td_full_name_odontologo\">' + turno.odontologo.nombre.toUpperCase() + ' ' + turno.odontologo.apellido.toUpperCase() + '</td>' +
+                        '<td class=\"td_date_turno\">' + turno.fecha + '</td>' +
                         '<td>' + deleteButton + '</td>' +
                         '</tr>';
                     $('#turnoTable tbody').append(turnoRow);

@@ -1,14 +1,20 @@
 package com.dh.clinicadental.model;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.StringJoiner;
 
 @Entity
 @Table(name = "Turnos")
+@Setter
+@Getter
 public class Turno {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TURNOS_SEQ")
-    @SequenceGenerator(name = "TURNOS_SEQ", sequenceName = "SEQUENCE_TURNOS")
+    @SequenceGenerator(name = "turno_sequence", sequenceName = "turno_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "turno_sequence")
     private Long id;
 
     @ManyToOne
@@ -36,45 +42,13 @@ public class Turno {
         this.fecha = fecha;
     }
 
-    public Paciente getPaciente() {
-        return paciente;
-    }
-
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
-    }
-
-    public Odontologo getOdontologo() {
-        return odontologo;
-    }
-
-    public void setOdontologo(Odontologo odontologo) {
-        this.odontologo = odontologo;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date date) {
-        this.fecha = date;
-    }
-
     @Override
     public String toString() {
-        return "Turno{" +
-                "id=" + id +
-                ", paciente=" + paciente +
-                ", odontologo=" + odontologo +
-                ", fecha=" + fecha +
-                '}';
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
+        return new StringJoiner(", ", Turno.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("paciente=" + paciente)
+                .add("odontologo=" + odontologo)
+                .add("fecha=" + fecha)
+                .toString();
     }
 }

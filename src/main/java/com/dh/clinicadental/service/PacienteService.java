@@ -5,6 +5,7 @@ import com.dh.clinicadental.model.Paciente;
 import com.dh.clinicadental.model.dto.DomicilioDTO;
 import com.dh.clinicadental.model.dto.PacienteDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,8 @@ import java.util.*;
 
 @Service
 public class PacienteService {
+
+    private static final Logger logger = Logger.getLogger(PacienteService.class);
 
     @Autowired
     IPacienteRepository pacienteRepository;
@@ -23,6 +26,7 @@ public class PacienteService {
     ObjectMapper mapper;
 
     public PacienteDTO createPaciente(PacienteDTO paciente) {
+        logger.info("Guardando paciente...");
         return savePaciente(paciente);
     }
 
@@ -38,15 +42,18 @@ public class PacienteService {
 
 
     public PacienteDTO readPaciente(Long id) {
+        logger.info("Buscando paciente...");
         Paciente paciente = pacienteRepository.findById(id).orElse(null);
         return transformToDTO(paciente);
     }
 
     public void updatePaciente(PacienteDTO paciente) {
+        logger.info("Actualizando paciente...");
         savePaciente(paciente);
     }
 
     public void deletePaciente(Long id) {
+        logger.info("Borrando paciente...");
         pacienteRepository.deleteById(id);
     }
 
